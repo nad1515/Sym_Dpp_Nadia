@@ -27,13 +27,14 @@ class Messages
     #[ORM\JoinColumn(nullable: false)]
     private ?user $user = null;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?self $messages = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?discutions $discutions = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?messages $messages = null;
 
     public function getId(): ?int
     {
@@ -88,17 +89,8 @@ class Messages
         return $this;
     }
 
-    public function getMessages(): ?self
-    {
-        return $this->messages;
-    }
-
-    public function setMessages(?self $messages): static
-    {
-        $this->messages = $messages;
-
-        return $this;
-    }
+    
+    
 
     public function getDiscutions(): ?discutions
     {
@@ -108,6 +100,18 @@ class Messages
     public function setDiscutions(?discutions $discutions): static
     {
         $this->discutions = $discutions;
+
+        return $this;
+    }
+
+    public function getMessages(): ?messages
+    {
+        return $this->messages;
+    }
+
+    public function setMessages(?messages $messages): static
+    {
+        $this->messages = $messages;
 
         return $this;
     }
