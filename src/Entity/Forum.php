@@ -20,8 +20,9 @@ class Forum
     #[ORM\Column(type: Types::BIGINT)]
     private ?string $ordre = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateCreation = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
 
     public function getId(): ?int
     {
@@ -52,15 +53,14 @@ class Forum
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->dateCreation;
+        return $this->createdAt;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
-        $this->dateCreation = $dateCreation;
+        $this->createdAt = $createdAt;
 
-        return $this;
     }
 }

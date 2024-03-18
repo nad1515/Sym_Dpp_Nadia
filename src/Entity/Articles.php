@@ -23,8 +23,9 @@ class Articles
     #[ORM\Column(type: Types::BLOB)]
     private $image = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateAjout = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -75,18 +76,16 @@ class Articles
         return $this;
     }
 
-    public function getDateAjout(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->dateAjout;
+        return $this->createdAt;
     }
 
-    public function setDateAjout(\DateTimeInterface $dateAjout): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
-        $this->dateAjout = $dateAjout;
+        $this->createdAt = $createdAt;
 
-        return $this;
     }
-
     public function getUser(): ?user
     {
         return $this->user;

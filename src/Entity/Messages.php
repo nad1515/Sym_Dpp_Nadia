@@ -20,8 +20,9 @@ class Messages
     #[ORM\Column]
     private ?bool $important = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateCreation = null;
+   
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -65,16 +66,15 @@ class Messages
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->dateCreation;
+        return $this->createdAt;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
-        $this->dateCreation = $dateCreation;
+        $this->createdAt = $createdAt;
 
-        return $this;
     }
 
     public function getUser(): ?user
