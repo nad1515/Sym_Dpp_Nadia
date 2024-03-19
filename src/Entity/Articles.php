@@ -11,7 +11,7 @@ class Articles
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:"id_article")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -24,15 +24,15 @@ class Articles
     private $image = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $dateCreation = null;
 
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
     private ?user $user = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_categorie', referencedColumnName:'id_categorie')]
     private ?categorie $categorie = null;
 
     public function getId(): ?int
@@ -78,12 +78,12 @@ class Articles
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->dateCreation;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    public function setCreatedAt(\DateTimeImmutable $dateCreation): void
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreation = $dateCreation;
 
     }
     public function getUser(): ?user

@@ -11,7 +11,7 @@ class Forum
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:"id_forum")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -21,7 +21,7 @@ class Forum
     private ?string $ordre = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $dateCreation = null;
 
 
     public function getId(): ?int
@@ -55,12 +55,12 @@ class Forum
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->dateCreation;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    public function setCreatedAt(\DateTimeImmutable $dateCreation): void
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreation = $dateCreation;
 
     }
 }

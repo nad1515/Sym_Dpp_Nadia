@@ -11,7 +11,7 @@ class Messages
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:'id_message')]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -22,21 +22,23 @@ class Messages
 
    
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $dateCreation = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
     private ?user $user = null;
 
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_discution', referencedColumnName:'id_discution')]
     private ?discutions $discutions = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?messages $messages = null;
+    #[ORM\JoinColumn(nullable: false, name:'id_message_1', referencedColumnName:'id_message')]
+    private ?messages $id_message_1 = null;
 
+   
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -66,14 +68,14 @@ class Messages
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getdateCreation(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->dateCreation;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    public function setdateCreation(\DateTimeImmutable $dateCreation): void
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreation = $dateCreation;
 
     }
 
@@ -104,15 +106,21 @@ class Messages
         return $this;
     }
 
-    public function getMessages(): ?messages
+    public function getIdMessage1(): ?messages
     {
-        return $this->messages;
+        return $this->id_message_1;
     }
 
-    public function setMessages(?messages $messages): static
+    public function setIdMessage1(?messages $id_message_1): static
     {
-        $this->messages = $messages;
+        $this->id_message_1 = $id_message_1;
 
         return $this;
     }
+
+   
+
+   
+    
+  
 }

@@ -11,7 +11,7 @@ class Discutions
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column("id_discution")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -22,15 +22,15 @@ class Discutions
 
     
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $dateCreation = null;
 
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
     private ?user $user = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_forum', referencedColumnName:'id_forum')]
     private ?forum $forum = null;
 
     public function getId(): ?int
@@ -64,12 +64,12 @@ class Discutions
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->dateCreation;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    public function setCreatedAt(\DateTimeImmutable $dateCreation): void
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreation = $dateCreation;
 
     }
 

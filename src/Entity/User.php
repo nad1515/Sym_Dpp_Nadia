@@ -16,7 +16,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:"id_user")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
@@ -40,8 +40,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeImmutable $dateCreation = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $adresse = null;
@@ -54,6 +54,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\Column(type: types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeImmutable $datemodification = null;
 
     public function getId(): ?int
     {
@@ -153,14 +156,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getDateCreation(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->dateCreation;
     }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    
+    #[ORM\PrePersist]
+    public function setDateCreationValue(): void
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreation = new \DateTimeImmutable;
 
     }
 
@@ -208,6 +212,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getDatemodification(): ?\DateTimeImmutable
+    {
+        return $this->datemodification;
+    }
+   
+    #[ORM\PrePersist]
+    public function setDatemodificationValue(): static
+    {
+        $this->datemodification = new \DateTimeImmutable;
 
         return $this;
     }

@@ -11,7 +11,7 @@ class Commentaires
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:"id_commentaire")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -22,15 +22,15 @@ class Commentaires
 
    
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $dateCreation = null;
 
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
     private ?user $user = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_article', referencedColumnName:'id_article')]
     private ?articles $articles = null;
 
     public function getId(): ?int
@@ -64,12 +64,12 @@ class Commentaires
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->dateCreation;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    public function setCreatedAt(\DateTimeImmutable $dateCreation): void
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt =$dateCreation;
 
     }
     public function getUser(): ?user
