@@ -62,14 +62,14 @@ class Commentaires
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getDateCreatedAt(): ?\DateTimeImmutable
     {
         return $this->dateCreation;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $dateCreation): void
+    public function setDateCreatedAt(\DateTimeImmutable $dateCreation): void
     {
-        $this->createdAt =$dateCreation;
+        $this->dateCreation =$dateCreation;
 
     }
     public function getUser(): ?user

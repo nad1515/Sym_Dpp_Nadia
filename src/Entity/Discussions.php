@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\DiscutionsRepository;
+use App\Repository\DiscussionsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DiscutionsRepository::class)]
-class Discutions
+#[ORM\Entity(repositoryClass: DiscussionsRepository::class)]
+class Discussions
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column("id_discution")]
+    #[ORM\Column("id_discussion")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -62,12 +62,12 @@ class Discutions
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getDateCreation(): ?\DateTimeImmutable
     {
         return $this->dateCreation;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $dateCreation): void
+    public function setDateCreation(\DateTimeImmutable $dateCreation): void
     {
         $this->dateCreation = $dateCreation;
 

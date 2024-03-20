@@ -30,8 +30,8 @@ class Messages
 
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false, name:'id_discution', referencedColumnName:'id_discution')]
-    private ?discutions $discutions = null;
+    #[ORM\JoinColumn(nullable: false, name:'id_discussion', referencedColumnName:'id_discussion')]
+    private ?discussions $discussions = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false, name:'id_message_1', referencedColumnName:'id_message')]
@@ -68,12 +68,12 @@ class Messages
         return $this;
     }
 
-    public function getdateCreation(): ?\DateTimeImmutable
+    public function getDateCreation(): ?\DateTimeImmutable
     {
         return $this->dateCreation;
     }
 
-    public function setdateCreation(\DateTimeImmutable $dateCreation): void
+    public function setDateCreation(\DateTimeImmutable $dateCreation): void
     {
         $this->dateCreation = $dateCreation;
 
@@ -94,14 +94,14 @@ class Messages
     
     
 
-    public function getDiscutions(): ?discutions
+    public function getDiscussions(): ?discussions
     {
-        return $this->discutions;
+        return $this->discussions;
     }
 
-    public function setDiscutions(?discutions $discutions): static
+    public function setDiscussions(?discussions $discussions): static
     {
-        $this->discutions = $discutions;
+        $this->discussions = $discussions;
 
         return $this;
     }

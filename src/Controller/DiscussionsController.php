@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class DiscutionsController extends AbstractController
+class DiscussionsController extends AbstractController
 {
-    #[Route('/discutions', name: 'app_discutions')]
+    #[Route('/discussions', name: 'app_discussions')]
     public function index(): Response
     {
-        return $this->render('discutions/index.html.twig', [
-            'controller_name' => 'DiscutionsController',
+        return $this->render('discussions/index.html.twig', [
+            'controller_name' => 'DiscussionsController',
         ]);
     }
 }
