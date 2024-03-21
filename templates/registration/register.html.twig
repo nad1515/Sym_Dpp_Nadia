@@ -37,8 +37,8 @@
            {{ form_row(registrationForm.agreeTerms) }}
         </div>
         
-          <button type="submit" class="btn">Register</button>
+          <button type="submit" class="btn btn-primary">S'inscrire</button>
         
     {{ form_end(registrationForm) }}
-    <p>Déja inscrit(e) ? <a href="{{ path('app_longin')}}">Me connecter</a></p>
+    <p>Déja inscrit(e) ? <a href="{{ path('app_login')}}">Me connecter</a></p>
 {% endblock %}
