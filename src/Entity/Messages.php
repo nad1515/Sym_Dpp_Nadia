@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MessagesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,10 +35,19 @@ class Messages
     #[ORM\JoinColumn(nullable: false, name:'id_discussion', referencedColumnName:'id_discussion')]
     private ?discussions $discussions = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false, name:'id_message_1', referencedColumnName:'id_message')]
-    private ?messages $id_message_1 = null;
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false, name:'parent_id', referencedColumnName:'id_message')]
+    private ?self $parent = null;
 
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    private Collection $messages;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
+
+    
    
    
     public function getId(): ?int
@@ -106,18 +117,49 @@ class Messages
         return $this;
     }
 
-    public function getIdMessage1(): ?messages
+    public function getParent(): ?self
     {
-        return $this->id_message_1;
+        return $this->parent;
     }
 
-    public function setIdMessage1(?messages $id_message_1): static
+    public function setParent(?self $parent): static
     {
-        $this->id_message_1 = $id_message_1;
+        $this->parent = $parent;
 
         return $this;
     }
 
+    /**
+     * @return Collection<int, self>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(self $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(self $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getParent() === $this) {
+                $message->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
    
 
    
