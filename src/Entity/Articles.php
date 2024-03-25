@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticlesRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Articles
 {
     #[ORM\Id]
@@ -76,12 +77,12 @@ class Articles
         return $this;
     }
 
-    public function getDateCreatedAt(): ?\DateTimeImmutable
+    public function getDateCreation(): ?\DateTimeImmutable
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreatedAt(\DateTimeImmutable $dateCreation): void
+    public function setDateCreation(\DateTimeImmutable $dateCreation): void
     {
         $this->dateCreation = $dateCreation;
 

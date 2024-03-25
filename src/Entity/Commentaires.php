@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentairesRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Commentaires
 {
     #[ORM\Id]
@@ -62,12 +63,12 @@ class Commentaires
         return $this;
     }
 
-    public function getDateCreatedAt(): ?\DateTimeImmutable
+    public function getDateCreation(): ?\DateTimeImmutable
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreatedAt(\DateTimeImmutable $dateCreation): void
+    public function setDateCreation(\DateTimeImmutable $dateCreation): void
     {
         $this->dateCreation =$dateCreation;
 

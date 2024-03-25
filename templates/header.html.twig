@@ -65,7 +65,7 @@
        {# si utilisateur connecté on affiche bouton déconnexion et nom utilisateur #}
          {% if app.user %}
             <div class="bule ms-auto">
-             {{ app.user.userIdentifier }}
+             {{ app.user.userIdentifier }}{{ (app.user.prenom|first)|upper }}{{ (app.user.nom|first)|upper }}
             </div>
             <a class="btn btn-danger m-2 p-2 ms-auto" type="submit" href="/logout"> Déconnexion </a>
 
