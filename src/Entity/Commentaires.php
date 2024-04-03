@@ -26,13 +26,17 @@ class Commentaires
     private ?\DateTimeImmutable $dateCreation = null;
 
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
-    private ?user $user = null;
 
-    #[ORM\ManyToOne]
+
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user' )]
+    private ?User $User = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
     #[ORM\JoinColumn(nullable: false, name:'id_article', referencedColumnName:'id_article')]
-    private ?articles $articles = null;
+    private ?Articles $Articles = null;
+
+    
 
     public function getId(): ?int
     {
@@ -73,27 +77,32 @@ class Commentaires
         $this->dateCreation =$dateCreation;
 
     }
-    public function getUser(): ?user
+    
+
+    public function getUser(): ?User
     {
-        return $this->user;
+        return $this->User;
     }
 
-    public function setUser(?user $user): static
+    public function setUser(?User $User): static
     {
-        $this->user = $user;
+        $this->User = $User;
 
         return $this;
     }
 
-    public function getArticles(): ?articles
+    public function getArticles(): ?Articles
     {
-        return $this->articles;
+        return $this->Articles;
     }
 
-    public function setArticles(?articles $articles): static
+    public function setArticles(?Articles $Articles): static
     {
-        $this->articles = $articles;
+        $this->Articles = $Articles;
 
         return $this;
     }
+
+   
+
 }

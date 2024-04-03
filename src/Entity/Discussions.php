@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DiscussionsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,14 +27,21 @@ class Discussions
     #[ORM\Column]
     private ?\DateTimeImmutable $dateCreation = null;
 
-
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'discussions')]
     #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
-    private ?user $user = null;
+    private ?User $User = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'discussions')]
     #[ORM\JoinColumn(nullable: false, name:'id_forum', referencedColumnName:'id_forum')]
-    private ?forum $forum = null;
+    private ?Forum $Forum = null;
+
+    #[ORM\OneToMany(targetEntity: Messages::class, mappedBy: 'Discussions')]
+    private Collection $messages;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,26 +83,60 @@ class Discussions
 
     }
 
-    public function getUser(): ?user
+    
+
+   
+
+    public function getUser(): ?User
     {
-        return $this->user;
+        return $this->User;
     }
 
-    public function setUser(?user $user): static
+    public function setUser(?User $User): static
     {
-        $this->user = $user;
+        $this->User = $User;
 
         return $this;
     }
 
-    public function getForum(): ?forum
+    public function getForum(): ?Forum
     {
-        return $this->forum;
+        return $this->Forum;
     }
 
-    public function setForum(?forum $forum): static
+    public function setForum(?Forum $Forum): static
     {
-        $this->forum = $forum;
+        $this->Forum = $Forum;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Messages>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Messages $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setDiscussions($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Messages $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getDiscussions() === $this) {
+                $message->setDiscussions(null);
+            }
+        }
 
         return $this;
     }

@@ -32,9 +32,6 @@ class Messages
     private ?user $user = null;
 
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false, name:'id_discussion', referencedColumnName:'id_discussion')]
-    private ?discussions $discussions = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false, name:'parent_id', referencedColumnName:'id_message')]
@@ -42,6 +39,10 @@ class Messages
 
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     private Collection $messages;
+
+    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false, name:'id_discussion', referencedColumnName:'id_discussion')]
+    private ?Discussions $Discussions = null;
 
     public function __construct()
     {
@@ -104,21 +105,7 @@ class Messages
     }
 
     
-    
-
-    public function getDiscussions(): ?discussions
-    {
-        return $this->discussions;
-    }
-
-    public function setDiscussions(?discussions $discussions): static
-    {
-        $this->discussions = $discussions;
-
-        return $this;
-    }
-
-    public function getParent(): ?self
+       public function getParent(): ?self
     {
         return $this->parent;
     }
@@ -156,6 +143,18 @@ class Messages
                 $message->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDiscussions(): ?Discussions
+    {
+        return $this->Discussions;
+    }
+
+    public function setDiscussions(?Discussions $Discussions): static
+    {
+        $this->Discussions = $Discussions;
 
         return $this;
     }

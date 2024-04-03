@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ForumRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,14 @@ class Forum
 
     #[ORM\Column]
     private ?\DateTimeImmutable $dateCreation = null;
+
+    #[ORM\OneToMany(targetEntity: Discussions::class, mappedBy: 'Forum', orphanRemoval: true)]
+    private Collection $discussions;
+
+    public function __construct()
+    {
+        $this->discussions = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -63,5 +73,35 @@ class Forum
     {
         $this->dateCreation = $dateCreation;
 
+    }
+
+    /**
+     * @return Collection<int, Discussions>
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussions $discussion): static
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions->add($discussion);
+            $discussion->setForum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussions $discussion): static
+    {
+        if ($this->discussions->removeElement($discussion)) {
+            // set the owning side to null (unless already changed)
+            if ($discussion->getForum() === $this) {
+                $discussion->setForum(null);
+            }
+        }
+
+        return $this;
     }
 }

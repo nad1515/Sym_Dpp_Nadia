@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticlesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,13 +30,25 @@ class Articles
     private ?\DateTimeImmutable $dateCreation = null;
 
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
-    private ?user $user = null;
+    
 
-    #[ORM\ManyToOne]
+
+    #[ORM\OneToMany(targetEntity: Commentaires::class, mappedBy: 'Articles', orphanRemoval: true)]
+    private Collection $commentaires;
+
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
+    private ?User $User = null;
+
+    #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false, name:'id_categorie', referencedColumnName:'id_categorie')]
-    private ?categorie $categorie = null;
+    private ?Categorie $Categorie = null;
+
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,27 +101,61 @@ class Articles
         $this->dateCreation = $dateCreation;
 
     }
-    public function getUser(): ?user
+   
+
+       /**
+     * @return Collection<int, Commentaires>
+     */
+    public function getCommentaires(): Collection
     {
-        return $this->user;
+        return $this->commentaires;
     }
 
-    public function setUser(?user $user): static
+    public function addCommentaire(Commentaires $commentaire): static
     {
-        $this->user = $user;
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setArticles($this);
+        }
 
         return $this;
     }
 
-    public function getCategorie(): ?categorie
+    public function removeCommentaire(Commentaires $commentaire): static
     {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?categorie $categorie): static
-    {
-        $this->categorie = $categorie;
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getArticles() === $this) {
+                $commentaire->setArticles(null);
+            }
+        }
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): static
+    {
+        $this->User = $User;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->Categorie;
+    }
+
+    public function setCategorie(?Categorie $Categorie): static
+    {
+        $this->Categorie = $Categorie;
+
+        return $this;
+    }
+
+   
 }

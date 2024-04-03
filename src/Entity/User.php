@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -59,9 +61,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $datemodification = null;
 
+    #[ORM\OneToMany(targetEntity: Commentaires::class, mappedBy: 'User', orphanRemoval: true)]
+    private Collection $commentaires;
+
+    #[ORM\OneToMany(targetEntity: Articles::class, mappedBy: 'User', orphanRemoval: true)]
+    private Collection $articles;
+
+    #[ORM\OneToMany(targetEntity: Discussions::class, mappedBy: 'User', orphanRemoval: true)]
+    private Collection $discussions;
+
     public function __construct()
     {
         $this->dateCreation =new \DateTimeImmutable();
+        $this->commentaires = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+        $this->discussions = new ArrayCollection();
     }
    
     public function getId(): ?int
@@ -231,6 +245,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDatemodificationValue(): static
     {
         $this->datemodification = new \DateTimeImmutable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaires>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaires $commentaire): static
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaires $commentaire): static
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUser() === $this) {
+                $commentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Articles>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Articles $article): static
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Articles $article): static
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getUser() === $this) {
+                $article->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Discussions>
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussions $discussion): static
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions->add($discussion);
+            $discussion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussions $discussion): static
+    {
+        if ($this->discussions->removeElement($discussion)) {
+            // set the owning side to null (unless already changed)
+            if ($discussion->getUser() === $this) {
+                $discussion->setUser(null);
+            }
+        }
 
         return $this;
     }
