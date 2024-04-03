@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Articles;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -14,7 +15,15 @@ class ArticlesCrudController extends AbstractCrudController
     {
         return Articles::class;
     }
-
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInPlural('Articles')
+            ->setEntityLabelInSingular('Article')
+            ->setDateFormat('...')
+            // ...
+        ;
+    }
     /*
     public function configureFields(string $pageName): iterable
     {

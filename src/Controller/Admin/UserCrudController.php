@@ -23,7 +23,7 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
        return $crud
-        ->setEntityLabelInPlural('Users')
+        ->setEntityLabelInPlural('Utilisateurs')
         // ->setPageTitle('index', '%entity_label_plural% listing')
         // ->setTimezone('Europe/Paris')
       ->setEntityLabelInSingular('Utilisateur');

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Messages;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -14,7 +15,15 @@ class MessagesCrudController extends AbstractCrudController
     {
         return Messages::class;
     }
-
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInPlural('Messages')
+            ->setEntityLabelInSingular('Message')
+            ->setDateFormat('...')
+            // ...
+        ;
+    }
     /*
     public function configureFields(string $pageName): iterable
     {
