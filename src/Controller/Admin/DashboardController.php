@@ -43,9 +43,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
         yield MenuItem::linkToCrud('Articles', 'fa-solid fa-font', Articles::class);
-        yield MenuItem::linkToCrud('Categories', 'fa-solid fa-books', Categorie::class);
+        yield MenuItem::linkToCrud('Categories', 'fa-solid fa-list-ul', Categorie::class);
         yield MenuItem::linkToCrud('Discussions', 'fa-solid fa-ear-listen', Discussions::class);
-        yield MenuItem::linkToCrud('Forums', 'fa-solid fa-peopele-roof', Forum::class);
+        yield MenuItem::linkToCrud('Forums', 'fa-solid fa-people-arrows', Forum::class);
         yield MenuItem::linkToCrud('Messages', 'fa-solid fa-comments', Messages::class);
         yield MenuItem::linkToCrud('Commentaires', 'fa-solid fa-comment', Commentaires::class);
     }

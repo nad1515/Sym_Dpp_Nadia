@@ -1,79 +1,66 @@
 
 <header>
  
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="header row">
-    <div class="container">
-    <div >
-      <img class="logo" src="/img/logo.png" alt="logo.png"> 
-    </div>
-    <span> </span>
-    <div>
+   <nav class="navbar navbar-expand-lg navbar-light      bg-light">
+          <div class="headertous">
+         <div class="header1">
 
-    </div>
-    </div>
-    <div></div>
-    </div>
-       {# <a class="navbar-brand" href="/home" >Accueil</a>
-       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button> #}
-{# 
-       <div class="collapse navbar-collapse " id="">
-           
-                <div class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle  " href="/livres" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Livres
-                  </a>
-                  
-                  <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/livres">Tous les livres</a></li>
-                  <li><a class="dropdown-item" href="/livres/auteur">par_auteur</a></li>
-                  <li><a class="dropdown-item" href="/livres/editeur">par_editeur</a></li>
-                  <li><a class="dropdown-item" href="/livres/titre">par_titre</a></li>
-                  </ul> 
-                  
-               </div>
-           <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/fournisseurs" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Fournisseurs
-            </a> 
-            <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/fournisseurs">Tous les Fournisseurs</a></li>
-            <li><a class="dropdown-item" href="/fournisseurs/raisonsociale">par_raison_sociale</a></li>
-            <li><a class="dropdown-item" href="/fournisseurs/localite">par_localité</a></li>
-            <li><a class="dropdown-item" href="/fournisseurs/pays">par_pays</a></li>
-            </ul>
-          </div> 
-           
-           <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/commander" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Commandes
-            </a> 
-            <ul class="dropdown-menu">
-            <li class="nav-item dropdown"><a class="dropdown-item" href="/commander">Toutes les commandes</a></li>
-            <li class="nav-item dropdown"><a class="dropdown-item" href="/commander/pardate">par_date</a></li>
-            <li class="nav-item dropdown"><a class="dropdown-item" href="/commander/fournisseur">par_fournisseur</a></li>
-            <li class="nav-item dropdown"><a class="dropdown-item" href="/commander/editeur">par_editeur</a></li>
-            </ul> 
-          </div>   #}
-           {# boutton reserver pour l'admin uniquement #}
-            {% if is_granted('ROLE_ADMIN') %}
-            <a href="/user/add" class="btn btn-info m-2 p-2">ajouter un utilisateur</a>
-            {% endif %}
-           
-       {# si utilisateur connecté on affiche bouton déconnexion et nom utilisateur #}
-         {% if app.user %}
-            <div class="bule ms-auto">
-             {{ app.user.userIdentifier }}{{ (app.user.prenom|first)|upper }}{{ (app.user.nom|first)|upper }}
+            <div class="container">
+                <div >
+                  <img class="logo" src="/img/logo.png" alt="logo.png"> 
+                </div>
+                  <div class="block-text">
+                    <b> <span> HelloEve  </span></b><br>
+                      <span class="text">Site non medical, qui propose un accompagnement pour les méres,<br>dans le cadre de la difficulté maternelle.
+                      </span>
+                  </div>
             </div>
-            <a class="btn btn-danger m-2 p-2 ms-auto" type="submit" href="/logout"> Déconnexion </a>
+       
+      
+                      
+          {# si utilisateur connecté on affiche bouton déconnexion et nom utilisateur #}
+              {% if app.user %}
+                <div class="bule ms-auto">
+                {{ app.user.userIdentifier }}{{ (app.user.prenom|first)|upper }}{{ (app.user.nom|first)|upper }}
+                </div>
+                <a class="btn btn-danger m-2 p-2 ms-auto" type="submit" href="/logout"> Déconnexion </a>
 
-         {# sinon si l'utilisateur n'est pas connecter on affiche le bouton de connexion #}
-         {% else %}
-            <a class="btn btn-primary m-2 p-2" type="submit" href="/login">connexion </a>
+              {# sinon si l'utilisateur n'est pas connecter on affiche le bouton de connexion  et inscription #}
+                {% else %}
+                <div class="boutton">
+                    <a class=" meconnecter btn  m-2 p-2" type="submit" href="/register">S'inscrire </a>
+                    <a class=" meconnecter btn  m-2 p-2" type="submit" href="/login">Se connecter </a>
+                    
+                  </div>
+            </div>
+            <div class="header2"> 
+                <a class="navbar-brand" href="/home">Accueil</a>
+              
+             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              
+              <li class="nav-item">
+                 <a class="nav-link" href="#">Qui sommes nous</a>
+              </li>
+               <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Blog sur la DPP
+                        </a>
+                 <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Symtome et Dyagnostique</a></li>
+                    <li><a class="dropdown-item" href="#">Causes de la DPP</a></li>
+                    <li><a class="dropdown-item" href="#">Prise en charge</a></li>
+                 </ul>
+              </li>
+             </ul>
+                 <div class="boutton2">
+                    <a class=" forum btn  m-2 p-2" type="submit" href="#">Forum </a>
+                    <a class=" aide  btn  m-2 p-2" type="submit" href="#">Aide d'urgence </a>
+                    
+                  </div>
+            </div>
+            
          {% endif %}
-      </dive>  
- </nav>
+    </dive>  
+  </nav>
 
 </header>

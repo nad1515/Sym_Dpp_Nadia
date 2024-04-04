@@ -7,14 +7,79 @@ body {
     /* background-color: skyblue; */
     background-size: 150%; 
 }
+.headertous{
+    width: 150%;
+    display: flex;
+    flex-direction: column;
+    
+   
+    
+}
+.header1{
+    width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color:rgba(16, 173, 206, 0.65);
+  justify-content: space-around;
+}
+.header2{
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(170, 214, 167, 1);
+    padding:20px;
+
+  }
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    justify-content: left;
+    margin:10px;
+  
+}
+.boutton1{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    /* a finir pour bien positionné les deux bouttons s'inscrire et se connecté */
+
+}
  .logo{
     width: 99px;
     height: 89px;
     border-radius: 50%;
-    margin-left: 10px;
     float:center; 
+    margin-right:20px;
+   
    /* position:absolute; */
+}
+b {
+    font-family: 'Great Vibes';
+    font-size: 36px;
+    color:rgba(130, 36, 98, 0.92);
+}
+.block-text{
+    font-family: 'Montserrat';
+    font-size: 20px;
 }
 .mention-legales{
     color: red;
+}
+.meconnecter{
+    background-color:rgba(251, 126, 186, 0.74) !important; 
+    color:aliceblue;
+    font-weight:bold;
+}
+.forum{
+    background-color:rgba(8, 148, 177, 1) !important; 
+    color:aliceblue;
+    font-weight:bold;
+}
+.aide {
+    background-color:rgba(251, 134, 126, 0.94)!important; 
+    color:aliceblue;
+    font-weight:bold;
+}
+footer{
+    background-color:rgba(16, 173, 206, 0.65) ;
 }
