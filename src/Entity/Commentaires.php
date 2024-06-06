@@ -7,11 +7,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentairesRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Commentaires
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:"id_commentaire")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -20,16 +21,22 @@ class Commentaires
     #[ORM\Column]
     private ?bool $important = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateCreation = null;
+   
+    #[ORM\Column]
+    private ?\DateTimeImmutable $dateCreation = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?articles $articles = null;
+
+
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user' )]
+    private ?User $User = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false, name:'id_article', referencedColumnName:'id_article')]
+    private ?Articles $Articles = null;
+
+    
 
     public function getId(): ?int
     {
@@ -60,39 +67,42 @@ class Commentaires
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation(): ?\DateTimeImmutable
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): static
+    public function setDateCreation(\DateTimeImmutable $dateCreation): void
     {
-        $this->dateCreation = $dateCreation;
+        $this->dateCreation =$dateCreation;
+
+    }
+    
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): static
+    {
+        $this->User = $User;
 
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getArticles(): ?Articles
     {
-        return $this->user;
+        return $this->Articles;
     }
 
-    public function setUser(?user $user): static
+    public function setArticles(?Articles $Articles): static
     {
-        $this->user = $user;
+        $this->Articles = $Articles;
 
         return $this;
     }
 
-    public function getArticles(): ?articles
-    {
-        return $this->articles;
-    }
+   
 
-    public function setArticles(?articles $articles): static
-    {
-        $this->articles = $articles;
-
-        return $this;
-    }
 }

@@ -3,15 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\MessagesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MessagesRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Messages
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:'id_message')]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -20,21 +23,35 @@ class Messages
     #[ORM\Column]
     private ?bool $important = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateCreation = null;
+   
+    #[ORM\Column]
+    private ?\DateTimeImmutable $dateCreation = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, name:'id_user', referencedColumnName:'id_user')]
     private ?user $user = null;
 
+
+
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?self $messages = null;
+    #[ORM\JoinColumn(nullable: false, name:'parent_id', referencedColumnName:'id_message')]
+    private ?self $parent = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?discutions $discutions = null;
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    private Collection $messages;
 
+    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false, name:'id_discussion', referencedColumnName:'id_discussion')]
+    private ?Discussions $Discussions = null;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
+
+    
+   
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -64,16 +81,15 @@ class Messages
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation(): ?\DateTimeImmutable
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): static
+    public function setDateCreation(\DateTimeImmutable $dateCreation): void
     {
         $this->dateCreation = $dateCreation;
 
-        return $this;
     }
 
     public function getUser(): ?user
@@ -88,27 +104,65 @@ class Messages
         return $this;
     }
 
-    public function getMessages(): ?self
+    
+       public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): static
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getMessages(): Collection
     {
         return $this->messages;
     }
 
-    public function setMessages(?self $messages): static
+    public function addMessage(self $message): static
     {
-        $this->messages = $messages;
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setParent($this);
+        }
 
         return $this;
     }
 
-    public function getDiscutions(): ?discutions
+    public function removeMessage(self $message): static
     {
-        return $this->discutions;
-    }
-
-    public function setDiscutions(?discutions $discutions): static
-    {
-        $this->discutions = $discutions;
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getParent() === $this) {
+                $message->setParent(null);
+            }
+        }
 
         return $this;
     }
+
+    public function getDiscussions(): ?Discussions
+    {
+        return $this->Discussions;
+    }
+
+    public function setDiscussions(?Discussions $Discussions): static
+    {
+        $this->Discussions = $Discussions;
+
+        return $this;
+    }
+
+   
+   
+
+   
+    
+  
 }
